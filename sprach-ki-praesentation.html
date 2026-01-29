@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprach-KI an Telefonanlage - IntelliWerk</title>
+
+    <!-- Google Fonts: Barlow -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,700;1,100&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+           INTELLIWERK CORPORATE DESIGN
+           Schlicht, Apple-inspiriert
+           ======================================== */
+
+        :root {
+            /* Primäre Farben */
+            --iw-kaltschwarz: #01012C;
+            --iw-magenta: #DB0EB7;
+            --iw-leuchtblau: #3F49D8;
+            --iw-dunkelviolett: #4B1570;
+            --iw-violettgrau: #9092C1;
+            --iw-gruengelb: #EFE41C;
+
+            /* Abstufungen (50%) */
+            --iw-magenta-50: #ED87DB;
+            --iw-leuchtblau-50: #9FA4EB;
+            --iw-dunkelviolett-50: #A58AB8;
+            --iw-violettgrau-50: #C8C9E0;
+
+            /* Neutrale Farben */
+            --iw-white: #FFFFFF;
+            --iw-light-bg: #F8F8FC;
+
+            /* Schriften */
+            --font-headline: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Aptos', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-quote: 'Barlow', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--iw-kaltschwarz);
+            background: var(--iw-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========================================
+           FOLIEN-CONTAINER
+           ======================================== */
+
+        .presentation {
+            width: 100%;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .slide {
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 120px;
+            position: relative;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        /* ========================================
+           LOGO RECHTS OBEN
+           ======================================== */
+
+        .slide__logo {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            height: 40px;
+            width: auto;
+        }
+
+        .slide--dark .slide__logo,
+        .slide--gradient .slide__logo,
+        .slide--accent .slide__logo {
+            filter: brightness(0) invert(1);
+        }
+
+        /* ========================================
+           FOLIEN-VARIANTEN
+           ======================================== */
+
+        /* Helle Folie (Standard) */
+        .slide--light {
+            background: var(--iw-white);
+            color: var(--iw-kaltschwarz);
+        }
+
+        /* Dunkle Folie */
+        .slide--dark {
+            background: var(--iw-kaltschwarz);
+            color: var(--iw-white);
+        }
+
+        /* Gradient Folie */
+        .slide--gradient {
+            background: linear-gradient(135deg, var(--iw-dunkelviolett) 0%, var(--iw-kaltschwarz) 100%);
+            color: var(--iw-white);
+        }
+
+        /* Akzent Folie */
+        .slide--accent {
+            background: var(--iw-dunkelviolett);
+            color: var(--iw-white);
+        }
+
+        /* ========================================
+           TYPOGRAFIE
+           ======================================== */
+
+        h1, h2, h3 {
+            font-family: var(--font-headline);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 1.25rem;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+            max-width: 900px;
+            margin-bottom: 1rem;
+        }
+
+        .lead {
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+            color: var(--iw-violettgrau);
+        }
+
+        .slide--dark .lead,
+        .slide--gradient .lead,
+        .slide--accent .lead {
+            color: var(--iw-violettgrau-50);
+        }
+
+        /* Zitate */
+        blockquote {
+            font-family: var(--font-quote);
+            font-weight: 100;
+            font-style: italic;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--iw-magenta);
+            position: absolute;
+            top: -1rem;
+            left: -2rem;
+            opacity: 0.5;
+        }
+
+        /* ========================================
+           AKZENTE & HIGHLIGHTS
+           ======================================== */
+
+        .highlight {
+            color: var(--iw-magenta);
+        }
+
+        .highlight--blue {
+            color: var(--iw-leuchtblau);
+        }
+
+        /* ========================================
+           LAYOUT-KOMPONENTEN
+           ======================================== */
+
+        .content-center {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-left {
+            text-align: left;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            width: 100%;
+            align-items: start;
+        }
+
+        .four-columns {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            width: 100%;
+        }
+
+        /* ========================================
+           KARTEN & BOXEN
+           ======================================== */
+
+        .card {
+            background: var(--iw-light-bg);
+            border-radius: 16px;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(1, 1, 44, 0.1);
+        }
+
+        .card--dark {
+            background: rgba(255,255,255,0.1);
+            color: var(--iw-white);
+        }
+
+        .card__number {
+            font-family: var(--font-headline);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--iw-magenta);
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .slide--dark .card__number,
+        .slide--gradient .card__number {
+            color: var(--iw-magenta-50);
+        }
+
+        .card__title {
+            font-family: var(--font-headline);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--iw-violettgrau);
+        }
+
+        .slide--dark .card p,
+        .slide--gradient .card p {
+            color: var(--iw-violettgrau-50);
+        }
+
+        /* ========================================
+           LISTEN
+           ======================================== */
+
+        ul.feature-list {
+            list-style: none;
+            font-size: 1.25rem;
+        }
+
+        ul.feature-list li {
+            padding: 16px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        ul.feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--iw-magenta);
+            border-radius: 50%;
+        }
+
+        .slide--dark ul.feature-list li::before {
+            background: var(--iw-magenta-50);
+        }
+
+        /* ========================================
+           STEP INDICATOR
+           ======================================== */
+
+        .step-badge {
+            display: inline-block;
+            background: var(--iw-magenta);
+            color: var(--iw-white);
+            font-family: var(--font-headline);
+            font-weight: 700;
+            font-size: 0.875rem;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .slide--dark .step-badge,
+        .slide--gradient .step-badge {
+            background: var(--iw-magenta-50);
+            color: var(--iw-kaltschwarz);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+
+        .slide__footer {
+            position: absolute;
+            bottom: 40px;
+            left: 120px;
+            right: 120px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--iw-violettgrau);
+        }
+
+        .slide--dark .slide__footer,
+        .slide--gradient .slide__footer {
+            color: var(--iw-violettgrau-50);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+
+        @media (max-width: 1200px) {
+            .four-columns {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 60px 60px;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .slide__footer {
+                left: 60px;
+                right: 60px;
+            }
+
+            .slide__logo {
+                right: 40px;
+                height: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .four-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .slide {
+                padding: 40px 24px;
+            }
+
+            .slide__footer {
+                left: 24px;
+                right: 24px;
+            }
+
+            .slide__logo {
+                right: 24px;
+                height: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+
+        <!-- ============================================
+             TITELFOLIE
+             ============================================ -->
+        <section class="slide slide--gradient content-center">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <h1>Sprach-KI an <span class="highlight">Telefonanlage</span></h1>
+            <p class="lead">Intelligente Automatisierung Ihres telefonischen Kundenkontakts</p>
+        </section>
+
+        <!-- ============================================
+             ZIELSETZUNG
+             ============================================ -->
+        <section class="slide slide--light content-center">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <h2>Zielsetzung</h2>
+            <p>Konzeption, Umsetzung und Inbetriebnahme einer KI-gestützten Sprachlösung, die eingehende Telefonanrufe <span class="highlight">automatisiert entgegennimmt</span>, häufige Kundenfragen beantwortet und Anrufer bei Bedarf gezielt an die passenden Ansprechpartner weiterleitet.</p>
+            <p class="lead" style="margin-top: 2rem;">Die Lösung wird an Ihre bestehende Telefonanlage angebunden und dient als erste Anlaufstelle im telefonischen Kundenkontakt.</p>
+        </section>
+
+        <!-- ============================================
+             VORGEHENSWEISE ÜBERSICHT
+             ============================================ -->
+        <section class="slide slide--dark content-center">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <h2 style="margin-bottom: 60px;">Unsere Vorgehensweise</h2>
+            <div class="four-columns">
+                <div class="card card--dark">
+                    <div class="card__number">1</div>
+                    <h3 class="card__title">Anforderungs-aufnahme</h3>
+                    <p>Strukturierte Erhebung Ihrer fachlichen und technischen Anforderungen</p>
+                </div>
+                <div class="card card--dark">
+                    <div class="card__number">2</div>
+                    <h3 class="card__title">Proof of Concept</h3>
+                    <p>Lauffähiger Prototyp zum Testen und Anpassen des Dialogverhaltens</p>
+                </div>
+                <div class="card card--dark">
+                    <div class="card__number">3</div>
+                    <h3 class="card__title">Technische Einrichtung</h3>
+                    <p>Unterstützung bei Konten, Rufnummer und Telefonie-Anbindung</p>
+                </div>
+                <div class="card card--dark">
+                    <div class="card__number">4</div>
+                    <h3 class="card__title">Integration & Go-Live</h3>
+                    <p>Verbindung aller Komponenten und produktive Schaltung</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SCHRITT 1: ANFORDERUNGSAUFNAHME
+             ============================================ -->
+        <section class="slide slide--light content-left">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <span class="step-badge">Schritt 1</span>
+            <h2>Anforderungsaufnahme & Konzeption</h2>
+            <div class="two-columns" style="margin-top: 40px;">
+                <div>
+                    <p>Zu Beginn erfolgt eine strukturierte Erhebung der fachlichen und technischen Anforderungen. Hierzu stellen Sie die notwendigen Informationen in einem gemeinsam abgestimmten Dokument bereit:</p>
+                </div>
+                <ul class="feature-list">
+                    <li>Typische Kundenanliegen und Fragen</li>
+                    <li>Gewünschte Antworten und Gesprächsverläufe</li>
+                    <li>Weiterleitungslogik zu Ansprechpartnern</li>
+                    <li>Tonalität und Verhalten der Sprach-KI</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SCHRITT 2: PROOF OF CONCEPT
+             ============================================ -->
+        <section class="slide slide--gradient content-left">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <span class="step-badge">Schritt 2</span>
+            <h2>Proof of Concept</h2>
+            <div class="two-columns" style="margin-top: 40px;">
+                <div>
+                    <p>Auf Grundlage der abgestimmten Anforderungen wird ein lauffähiger Proof of Concept erstellt. Der PoC wird über eine <span class="highlight">Weboberfläche</span> bereitgestellt und kann ohne technische Vorkenntnisse getestet werden.</p>
+                </div>
+                <ul class="feature-list">
+                    <li>Dialogverhalten realistisch testen</li>
+                    <li>Feedback geben und Anpassungen vornehmen</li>
+                    <li>Fundierte Entscheidungsgrundlage erhalten</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SCHRITT 3: TECHNISCHE EINRICHTUNG
+             ============================================ -->
+        <section class="slide slide--light content-left">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <span class="step-badge">Schritt 3</span>
+            <h2>Technische Einrichtung</h2>
+            <div class="two-columns" style="margin-top: 40px;">
+                <div>
+                    <p>Nach Freigabe des PoC unterstützen wir Sie bei der Einrichtung der notwendigen technischen Komponenten:</p>
+                    <ul class="feature-list" style="margin-top: 20px;">
+                        <li>Anlage der erforderlichen Konten</li>
+                        <li>Unterstützung bei Identitätsnachweisen</li>
+                        <li>Einrichtung einer deutschen Rufnummer</li>
+                        <li>Grundkonfiguration der Telefonie-Anbindung</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3 class="card__title">Hinweis</h3>
+                    <p style="color: var(--iw-kaltschwarz);">Der Betrieb der Sprach-KI erfolgt über externe Anbieter. Wir begleiten und unterstützen Sie bei Einrichtung und Konfiguration.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================
+             SCHRITT 4: GO-LIVE
+             ============================================ -->
+        <section class="slide slide--dark content-center">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <span class="step-badge">Schritt 4</span>
+            <h2>Integration & Go-Live</h2>
+            <p style="margin-top: 40px;">Nach erfolgreicher Einrichtung werden alle Komponenten verbunden:</p>
+            <ul class="feature-list" style="margin-top: 30px; text-align: left;">
+                <li>Sprach-KI, Telefonanlage und Rufnummer miteinander verbunden</li>
+                <li>Finale Tests durchgeführt</li>
+                <li>Lösung produktiv geschaltet</li>
+            </ul>
+            <p class="lead" style="margin-top: 50px;">Ab diesem Zeitpunkt steht die Sprach-KI für eingehende Anrufe zur Verfügung.</p>
+        </section>
+
+        <!-- ============================================
+             ADD-ONS
+             ============================================ -->
+        <section class="slide slide--light content-center">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <h2>Optionale Erweiterungen</h2>
+            <p style="margin-top: 40px;">Anbindungen an <span class="highlight">Warenwirtschaft</span>, <span class="highlight">CRM-Systeme</span> oder sonstige Systeme können eingerichtet werden.</p>
+            <p style="margin-top: 20px;">Dies versetzt die Sprach-KI in die Lage, Kunden live Informationen zur Verfügung zu stellen oder Bestellungen entgegenzunehmen.</p>
+        </section>
+
+        <!-- ============================================
+             ABGRENZUNG
+             ============================================ -->
+        <section class="slide slide--accent content-left">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <h2>Gut zu wissen</h2>
+            <p style="margin-top: 40px; margin-bottom: 30px;">Nicht Bestandteil des Basis-Angebots sind:</p>
+            <ul class="feature-list">
+                <li>Laufender Betrieb oder Abrechnung externer Dienste</li>
+                <li>Kosten für Telefonie, Sprachverarbeitung oder Nutzungsgebühren Dritter</li>
+                <li>Langfristiger Support oder Weiterentwicklung (optional separat vereinbar)</li>
+            </ul>
+        </section>
+
+        <!-- ============================================
+             ABSCHLUSSFOLIE
+             ============================================ -->
+        <section class="slide slide--gradient content-center">
+            <img src="logo.png" alt="Logo" class="slide__logo">
+            <h1>Bereit für den nächsten Schritt?</h1>
+            <p class="lead" style="margin-top: 20px;">Wir freuen uns auf das Gespräch mit Ihnen.</p>
+            <div class="slide__footer">
+                <span>connexta</span>
+                <span>Sprach-KI an Telefonanlage</span>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Folienanzeige -->
+    <div class="slide-indicator"></div>
+
+    <script>
+        // Präsentations-Navigation mit Pfeiltasten
+        (function() {
+            const slides = document.querySelectorAll('.slide');
+            const indicator = document.querySelector('.slide-indicator');
+            let currentSlide = 0;
+
+            // Folienanzeige aktualisieren
+            function updateIndicator() {
+                indicator.textContent = `${currentSlide + 1} / ${slides.length}`;
+            }
+
+            // Zu einer bestimmten Folie navigieren
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= slides.length) index = slides.length - 1;
+
+                currentSlide = index;
+                slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+                updateIndicator();
+            }
+
+            // Nächste Folie
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+
+            // Vorherige Folie
+            function prevSlide() {
+                goToSlide(currentSlide - 1);
+            }
+
+            // Aktuelle Folie anhand der Scroll-Position ermitteln
+            function detectCurrentSlide() {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                slides.forEach((slide, index) => {
+                    const slideTop = slide.offsetTop;
+                    if (scrollTop >= slideTop - windowHeight / 2) {
+                        currentSlide = index;
+                    }
+                });
+                updateIndicator();
+            }
+
+            // Tastatur-Events
+            document.addEventListener('keydown', function(e) {
+                switch(e.key) {
+                    case 'ArrowRight':
+                    case 'ArrowDown':
+                    case ' ':
+                    case 'PageDown':
+                        e.preventDefault();
+                        nextSlide();
+                        break;
+                    case 'ArrowLeft':
+                    case 'ArrowUp':
+                    case 'PageUp':
+                        e.preventDefault();
+                        prevSlide();
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        goToSlide(0);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        goToSlide(slides.length - 1);
+                        break;
+                }
+            });
+
+            // Scroll-Events für Folienanzeige
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(detectCurrentSlide, 100);
+            });
+
+            // Initialisierung
+            updateIndicator();
+        })();
+    </script>
+
+    <style>
+        /* Folienanzeige */
+        .slide-indicator {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--iw-kaltschwarz);
+            color: var(--iw-white);
+            font-family: var(--font-headline);
+            font-size: 0.875rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            opacity: 0.7;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide-indicator:hover {
+            opacity: 1;
+        }
+    </style>
+</body>
+</html>
